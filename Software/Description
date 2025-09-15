@@ -1,1 +1,71 @@
+Wi-Fi Motion Detection Script – Detailed Description
 
+The Wi-Fi Motion Detection Script is a Python-based tool designed to monitor the presence and activity of a device on your Wi-Fi network. By continuously pinging a target device and analyzing the response times, it can detect sudden changes that may indicate motion or activity near the device. The script combines real-time data logging, alert notifications, and live visualization to provide an intuitive and interactive monitoring experience.
+
+Key Features
+
+Real-Time Ping Monitoring
+
+Continuously sends pings to the specified target device.
+
+Measures response time (latency) in milliseconds.
+
+Handles unreachable or timed-out responses gracefully.
+
+Live Visualization
+
+Plots ping delay over time using a dynamic, live-updating graph.
+
+Graph updates every second for a clear, real-time view.
+
+Customizable graph labels and appearance for easy reading.
+
+Motion/Activity Alerts
+
+Detects sudden changes in ping delay based on a configurable threshold.
+
+Alerts appear in the console when a significant change is detected.
+
+Helps identify movement or activity near the monitored device.
+
+Customizable Settings
+
+Target IP address can be easily modified in the script.
+
+Alert threshold is adjustable to match sensitivity requirements.
+
+Logging frequency and display options can be fine-tuned.
+
+Cross-Platform Compatibility
+
+Works seamlessly on Windows, Linux, and macOS.
+
+Automatically adjusts ping command based on the operating system.
+
+Optional Logging & Data Analysis
+
+Optionally uses pandas for structured data logging and further analysis.
+
+Logged data can be saved, exported, and used for trend analysis over time.
+
+Benefits
+
+Non-intrusive Monitoring: No additional hardware needed; monitors devices already on your Wi-Fi network.
+
+Real-Time Insights: Provides immediate feedback about network activity or device presence.
+
+User-Friendly: Console-based alerts plus a live graph for intuitive monitoring.
+
+Flexible & Customizable: Adjust IP, thresholds, and logging to match different scenarios.
+
+Ideal for Home or Small Office: Detect motion, monitor devices, or analyze network performance with minimal setup.
+
+Use Cases
+
+Detect movement near Wi-Fi-enabled devices without cameras.
+
+Monitor the presence of smartphones, laptops, or IoT devices on the network.
+
+Track network performance by visualizing ping delays.
+
+Educational tool for learning about networking, Python programming, and real-time data visualization.
