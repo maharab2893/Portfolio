@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}My Orders — FreshTicket{% endblock %}
+{% block content %}
+
+<div class="eyebrow">History</div>
+<h1>My orders</h1>
+
+{% if history %}
+<table>
+  <thead><tr><th>Order #</th><th>Date</th><th>Total</th><th></th></tr></thead>
+  <tbody>
+  {% for o in history %}
+    <tr>
+      <td>#{{ o.OrderID }}</td>
+      <td>{{ o.OrderDate }}</td>
+      <td>${{ "%.2f"|format(o.TotalAmount) }}</td>
+      <td><a href="{{ url_for('order_detail', order_id=o.OrderID) }}">View receipt</a></td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<div class="empty-state">No orders yet. <a href="{{ url_for('search_restaurant') }}">Order something &rarr;</a></div>
+{% endif %}
+
+{% endblock %}

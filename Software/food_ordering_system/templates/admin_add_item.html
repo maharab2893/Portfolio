@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}Add Menu Item — FreshTicket{% endblock %}
+{% block content %}
+<div class="card form-narrow">
+  <h2>Add a new menu item</h2>
+  <form method="POST">
+    <label for="name">Item name</label>
+    <input type="text" id="name" name="name" required>
+
+    <label for="price">Price ($)</label>
+    <input type="number" id="price" name="price" step="0.01" min="0" required>
+
+    <label for="avg_time">Average making time (minutes)</label>
+    <input type="number" id="avg_time" name="avg_time" min="0" required>
+
+    <button class="btn btn-accent btn-block" type="submit">Add item</button>
+  </form>
+</div>
+{% endblock %}

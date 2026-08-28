@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{% block title %}FreshTicket{% endblock %}</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="container">
+    <a class="brand" href="{{ url_for('index') }}">Fresh<span>Ticket</span></a>
+    <div class="navlinks">
+      {% if session.get('user_type') == 'customer' %}
+        <a href="{{ url_for('search_restaurant') }}">Restaurants</a>
+        <a href="{{ url_for('search_item') }}">Find a Dish</a>
+        <a href="{{ url_for('view_cart') }}">Cart ({{ session.get('cart', [])|length }})</a>
+        <a href="{{ url_for('order_history') }}">My Orders</a>
+        <a href="{{ url_for('customer_dashboard') }}">{{ session.get('customer_name') }}</a>
+        <a class="pill" href="{{ url_for('customer_logout') }}">Log out</a>
+      {% elif session.get('user_type') == 'admin' %}
+        <a href="{{ url_for('admin_dashboard') }}">Dashboard</a>
+        <a href="{{ url_for('admin_orders') }}">Orders</a>
+        <a href="{{ url_for('admin_analytics') }}">Analytics</a>
+        <a href="{{ url_for('admin_add_item') }}">Add Item</a>
+        <span class="badge">{{ session.get('restaurant_name') }}</span>
+        <a class="pill" href="{{ url_for('admin_logout') }}">Log out</a>
+      {% else %}
+        <a href="{{ url_for('customer_login') }}">Customer Login</a>
+        <a href="{{ url_for('admin_login') }}">Restaurant Login</a>
+        <a class="pill" href="{{ url_for('customer_register') }}">Sign Up</a>
+      {% endif %}
+    </div>
+  </div>
+</nav>
+
+<div class="page">
+  <div class="container">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="flash flash-{{ category }}">{{ message }}</div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    {% block content %}{% endblock %}
+  </div>
+</div>
+
+<footer>FreshTicket &mdash; a demo Online Food Ordering System built with Flask &amp; SQLite.</footer>
+</body>
+</html>

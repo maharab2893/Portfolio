@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block title %}My Dashboard — FreshTicket{% endblock %}
+{% block content %}
+
+<div class="eyebrow">Your account</div>
+<h1>Hi, {{ session.get('customer_name') }}</h1>
+
+<div class="stat-row">
+  <div class="stat-box">
+    <div class="num">{{ summary.TotalOrders if summary else 0 }}</div>
+    <div class="label">Orders placed</div>
+  </div>
+  <div class="stat-box">
+    <div class="num">${{ "%.2f"|format(summary.TotalSpent) if summary else "0.00" }}</div>
+    <div class="label">Total spent</div>
+  </div>
+</div>
+
+<div class="grid cols-3" style="margin: 24px 0;">
+  <a class="card" style="text-decoration:none;" href="{{ url_for('search_restaurant') }}">
+    <h3>Browse Restaurants</h3>
+    <p class="muted">Search by restaurant name and explore their menu.</p>
+  </a>
+  <a class="card" style="text-decoration:none;" href="{{ url_for('search_item') }}">
+    <h3>Find a Dish</h3>
+    <p class="muted">Search any food item across all restaurants.</p>
+  </a>
+  <a class="card" style="text-decoration:none;" href="{{ url_for('view_cart') }}">
+    <h3>Your Cart</h3>
+    <p class="muted">{{ session.get('cart', [])|length }} item(s) waiting to order.</p>
+  </a>
+</div>
+
+<div class="section-title">Recent Orders</div>
+{% if history %}
+<table>
+  <thead><tr><th>Order #</th><th>Date</th><th>Total</th><th></th></tr></thead>
+  <tbody>
+  {% for o in history[:5] %}
+    <tr>
+      <td>#{{ o.OrderID }}</td>
+      <td>{{ o.OrderDate }}</td>
+      <td>${{ "%.2f"|format(o.TotalAmount) }}</td>
+      <td><a href="{{ url_for('order_detail', order_id=o.OrderID) }}">View</a></td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+<p style="margin-top:12px;"><a href="{{ url_for('order_history') }}">See full order history &rarr;</a></p>
+{% else %}
+<div class="empty-state">You haven't placed any orders yet. <a href="{{ url_for('search_restaurant') }}">Find something to eat &rarr;</a></div>
+{% endif %}
+
+{% endblock %}

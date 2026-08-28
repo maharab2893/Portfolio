@@ -1,0 +1,39 @@
+erDiagram
+    Customers ||--o{ Orders : places
+    Restaurants ||--o{ MenuItems : lists
+    Orders ||--|{ OrderDetails : contains
+    MenuItems ||--o{ OrderDetails : "appears in"
+
+    Customers {
+        int CustomerID PK
+        string Name
+        string Address
+        string Phone
+        string Email
+        string PasswordHash
+    }
+    Restaurants {
+        int RestaurantID PK
+        string Name
+        string Location
+        string AdminUsername
+        string AdminPasswordHash
+    }
+    MenuItems {
+        int ItemID PK
+        int RestaurantID FK
+        string Name
+        float Price
+        int AverageMakingTime
+    }
+    Orders {
+        int OrderID PK
+        int CustomerID FK
+        datetime OrderDate
+        float TotalAmount
+    }
+    OrderDetails {
+        int OrderID PK_FK
+        int ItemID PK_FK
+        int Quantity
+    }

@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% block title %}Admin Dashboard — FreshTicket{% endblock %}
+{% block content %}
+
+<div class="eyebrow">{{ session.get('restaurant_name') }}</div>
+<h1>Restaurant dashboard</h1>
+
+<div class="stat-row">
+  <div class="stat-box">
+    <div class="num">{{ totals.TotalOrders }}</div>
+    <div class="label">Orders received</div>
+  </div>
+  <div class="stat-box">
+    <div class="num">${{ "%.2f"|format(totals.TotalRevenue) }}</div>
+    <div class="label">Total revenue</div>
+  </div>
+  <div class="stat-box">
+    <div class="num">{{ totals.MenuItemCount }}</div>
+    <div class="label">Menu items</div>
+  </div>
+</div>
+
+<div class="grid cols-3" style="margin: 24px 0;">
+  <a class="card" style="text-decoration:none;" href="{{ url_for('admin_add_item') }}">
+    <h3>Add Menu Item</h3>
+    <p class="muted">List a new dish with price and average making time.</p>
+  </a>
+  <a class="card" style="text-decoration:none;" href="{{ url_for('admin_orders') }}">
+    <h3>Track Orders</h3>
+    <p class="muted">See which customer ordered which item.</p>
+  </a>
+  <a class="card" style="text-decoration:none;" href="{{ url_for('admin_analytics') }}">
+    <h3>Sales Analytics</h3>
+    <p class="muted">Daily &amp; monthly revenue, top-selling items.</p>
+  </a>
+</div>
+
+<div class="section-title">Your Menu</div>
+{% if menu_items %}
+<table>
+  <thead><tr><th>Item</th><th>Price</th><th>Avg. Making Time</th></tr></thead>
+  <tbody>
+  {% for item in menu_items %}
+    <tr>
+      <td>{{ item.Name }}</td>
+      <td>${{ "%.2f"|format(item.Price) }}</td>
+      <td>{{ item.AverageMakingTime }} min</td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<div class="empty-state">You haven't added any menu items yet. <a href="{{ url_for('admin_add_item') }}">Add your first item &rarr;</a></div>
+{% endif %}
+
+<div class="section-title">Recent Orders</div>
+{% if recent_orders %}
+<table>
+  <thead><tr><th>Order #</th><th>Date</th><th>Customer</th><th>Item</th><th>Qty</th><th>Line total</th></tr></thead>
+  <tbody>
+  {% for o in recent_orders %}
+    <tr>
+      <td>#{{ o.OrderID }}</td>
+      <td>{{ o.OrderDate }}</td>
+      <td>{{ o.CustomerName }} (ID {{ o.CustomerID }})</td>
+      <td>{{ o.ItemName }}</td>
+      <td>{{ o.Quantity }}</td>
+      <td>${{ "%.2f"|format(o.LineTotal) }}</td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<div class="empty-state">No orders yet.</div>
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block title %}Sales Analytics — FreshTicket{% endblock %}
+{% block content %}
+
+<div class="eyebrow">{{ session.get('restaurant_name') }}</div>
+<h1>Sales analytics</h1>
+
+<div class="section-title">Top-Selling Items</div>
+{% if top_items %}
+<table>
+  <thead><tr><th>Item</th><th>Total Quantity Sold</th><th>Revenue</th></tr></thead>
+  <tbody>
+  {% for item in top_items %}
+    <tr>
+      <td>{{ item.ItemName }}</td>
+      <td>{{ item.TotalQuantityOrdered }}</td>
+      <td>${{ "%.2f"|format(item.Revenue) }}</td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<div class="empty-state">No sales yet.</div>
+{% endif %}
+
+<div class="section-title">Daily Revenue (last 30 days)</div>
+{% if daily %}
+<table>
+  <thead><tr><th>Day</th><th>Orders</th><th>Items Sold</th><th>Revenue</th></tr></thead>
+  <tbody>
+  {% for d in daily %}
+    <tr>
+      <td>{{ d.SaleDay }}</td>
+      <td>{{ d.OrderCount }}</td>
+      <td>{{ d.ItemsSold }}</td>
+      <td>${{ "%.2f"|format(d.Revenue) }}</td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<div class="empty-state">No sales in the last 30 days.</div>
+{% endif %}
+
+<div class="section-title">Monthly Revenue</div>
+{% if monthly %}
+<table>
+  <thead><tr><th>Month</th><th>Orders</th><th>Items Sold</th><th>Revenue</th></tr></thead>
+  <tbody>
+  {% for m in monthly %}
+    <tr>
+      <td>{{ m.SaleMonth }}</td>
+      <td>{{ m.OrderCount }}</td>
+      <td>{{ m.ItemsSold }}</td>
+      <td>${{ "%.2f"|format(m.Revenue) }}</td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<div class="empty-state">No monthly sales data yet.</div>
+{% endif %}
+
+{% endblock %}

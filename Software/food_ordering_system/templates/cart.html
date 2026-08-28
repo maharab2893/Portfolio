@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block title %}Your Cart — FreshTicket{% endblock %}
+{% block content %}
+
+<h1>Your cart</h1>
+
+{% if cart %}
+<table>
+  <thead>
+    <tr><th>Item</th><th>Restaurant</th><th>Price</th><th>Qty</th><th>Line total</th><th></th></tr>
+  </thead>
+  <tbody>
+  {% for line in cart %}
+    <tr>
+      <td>{{ line.name }}</td>
+      <td>{{ line.restaurant_name }}</td>
+      <td>${{ "%.2f"|format(line.price) }}</td>
+      <td>{{ line.quantity }}</td>
+      <td>${{ "%.2f"|format(line.price * line.quantity) }}</td>
+      <td>
+        <form method="POST" action="{{ url_for('cart_remove', item_id=line.item_id) }}">
+          <button class="btn btn-small btn-danger" type="submit">Remove</button>
+        </form>
+      </td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+
+<div class="stat-row">
+  <div class="stat-box">
+    <div class="num">${{ "%.2f"|format(total) }}</div>
+    <div class="label">Cart total</div>
+  </div>
+</div>
+
+<form method="POST" action="{{ url_for('order_place') }}" style="display:inline;">
+  <button class="btn btn-accent" type="submit">Place order</button>
+</form>
+<form method="POST" action="{{ url_for('cart_clear') }}" style="display:inline;">
+  <button class="btn btn-outline" type="submit">Clear cart</button>
+</form>
+
+{% else %}
+<div class="empty-state">Your cart is empty. <a href="{{ url_for('search_restaurant') }}">Browse restaurants &rarr;</a></div>
+{% endif %}
+
+{% endblock %}

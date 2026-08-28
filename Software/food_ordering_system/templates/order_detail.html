@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}Order #{{ bill.OrderID }} — FreshTicket{% endblock %}
+{% block content %}
+
+<div class="eyebrow">Receipt</div>
+<h1>Order #{{ bill.OrderID }}</h1>
+<p class="muted">Placed {{ bill.OrderDate }}</p>
+
+<table>
+  <thead><tr><th>Item</th><th>Restaurant</th><th>Price</th><th>Qty</th><th>Line total</th></tr></thead>
+  <tbody>
+  {% for line in lines %}
+    <tr>
+      <td>{{ line.ItemName }}</td>
+      <td>{{ line.RestaurantName }}</td>
+      <td>${{ "%.2f"|format(line.Price) }}</td>
+      <td>{{ line.Quantity }}</td>
+      <td>${{ "%.2f"|format(line.LineTotal) }}</td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+
+<div class="stat-row">
+  <div class="stat-box">
+    <div class="num">${{ "%.2f"|format(bill.ComputedTotal) }}</div>
+    <div class="label">Total (computed live)</div>
+  </div>
+  <div class="stat-box">
+    <div class="num">${{ "%.2f"|format(bill.StoredTotal) }}</div>
+    <div class="label">Total (trigger-maintained)</div>
+  </div>
+</div>
+
+<p><a href="{{ url_for('order_history') }}">&larr; Back to order history</a></p>
+
+{% endblock %}

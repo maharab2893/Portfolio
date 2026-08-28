@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}FreshTicket — Order food from local restaurants{% endblock %}
+{% block content %}
+
+<div class="hero">
+  <div class="eyebrow">Order &middot; Track &middot; Repeat</div>
+  <h1>Good food, ordered like a ticket &mdash; simple, itemized, on time.</h1>
+  <p class="lead">Search restaurants or dishes, see the average making time before you order,
+     and track every order from the kitchen to your door.</p>
+  {% if session.get('user_type') != 'customer' %}
+    <a class="btn btn-accent" href="{{ url_for('customer_register') }}">Create a free account</a>
+    <a class="btn btn-outline" href="{{ url_for('admin_register') }}">Register your restaurant</a>
+  {% else %}
+    <a class="btn btn-accent" href="{{ url_for('search_restaurant') }}">Browse restaurants</a>
+  {% endif %}
+</div>
+
+<div class="section-title">Most Popular Right Now</div>
+{% if popular_items %}
+<div class="grid cols-3">
+  {% for item in popular_items %}
+  <div class="ticket">
+    <h3>{{ item.ItemName }}</h3>
+    <div class="meta">from {{ item.RestaurantName }}</div>
+    <div class="stub-divider"></div>
+    <span class="badge">{{ item.TotalQuantityOrdered }} ordered</span>
+  </div>
+  {% endfor %}
+</div>
+{% else %}
+<div class="empty-state">No orders yet &mdash; be the first to order something delicious.</div>
+{% endif %}
+
+<div class="section-title">Top Restaurants by Sales</div>
+{% if top_restaurants %}
+<table>
+  <thead><tr><th>Restaurant</th><th>Location</th><th>Total Sales</th></tr></thead>
+  <tbody>
+    {% for r in top_restaurants %}
+    <tr>
+      <td>{{ r.RestaurantName }}</td>
+      <td>{{ r.Location }}</td>
+      <td>${{ "%.2f"|format(r.TotalSales) }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<div class="empty-state">No sales recorded yet.</div>
+{% endif %}
+
+{% endblock %}

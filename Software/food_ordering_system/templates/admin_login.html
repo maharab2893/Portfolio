@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Restaurant Login — FreshTicket{% endblock %}
+{% block content %}
+<div class="card form-narrow">
+  <h2>Restaurant admin login</h2>
+  <form method="POST">
+    <label for="username">Admin username</label>
+    <input type="text" id="username" name="username" required>
+
+    <label for="password">Password</label>
+    <input type="password" id="password" name="password" required>
+
+    <button class="btn btn-accent btn-block" type="submit">Log in</button>
+  </form>
+  <p class="muted" style="margin-top:14px;">New restaurant?
+    <a href="{{ url_for('admin_register') }}">Register here</a></p>
+</div>
+{% endblock %}

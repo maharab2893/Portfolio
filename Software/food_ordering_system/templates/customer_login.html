@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Log In — FreshTicket{% endblock %}
+{% block content %}
+<div class="card form-narrow">
+  <h2>Customer login</h2>
+  <form method="POST">
+    <label for="email">Email</label>
+    <input type="email" id="email" name="email" required>
+
+    <label for="password">Password</label>
+    <input type="password" id="password" name="password" required>
+
+    <button class="btn btn-accent btn-block" type="submit">Log in</button>
+  </form>
+  <p class="muted" style="margin-top:14px;">New here?
+    <a href="{{ url_for('customer_register') }}">Create an account</a></p>
+</div>
+{% endblock %}

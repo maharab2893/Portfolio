@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}Search Dishes — FreshTicket{% endblock %}
+{% block content %}
+
+<div class="eyebrow">Browse</div>
+<h1>Search by food item</h1>
+
+<form method="GET" class="inline-form" style="max-width:500px; margin-bottom:20px;">
+  <div>
+    <label for="q">Dish name</label>
+    <input type="text" id="q" name="q" placeholder="e.g. Margherita Pizza" value="{{ keyword }}">
+  </div>
+  <div style="flex:0;">
+    <button class="btn btn-accent" type="submit" style="margin-bottom:14px;">Search</button>
+  </div>
+</form>
+
+{% if keyword %}
+  {% if results %}
+  <div class="grid cols-3">
+    {% for item in results %}
+    <div class="ticket">
+      <h3>{{ item.ItemName }}</h3>
+      <div class="meta">from {{ item.RestaurantName }} &middot; {{ item.Location }}</div>
+      <div class="stub-divider"></div>
+      <div class="price">${{ "%.2f"|format(item.Price) }}</div>
+      <div class="meta">Avg. making time: {{ item.AverageMakingTime }} min</div>
+      <form method="POST" action="{{ url_for('cart_add', item_id=item.ItemID) }}" style="margin-top:10px;">
+        <input class="qty-input" type="number" name="quantity" value="1" min="1">
+        <button class="btn btn-small btn-accent" type="submit">Add to cart</button>
+      </form>
+    </div>
+    {% endfor %}
+  </div>
+  {% else %}
+  <div class="empty-state">No dishes match "{{ keyword }}".</div>
+  {% endif %}
+{% else %}
+<div class="empty-state">Type a dish name above to see results.</div>
+{% endif %}
+
+{% endblock %}

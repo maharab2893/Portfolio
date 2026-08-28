@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}Track Orders — FreshTicket{% endblock %}
+{% block content %}
+
+<div class="eyebrow">{{ session.get('restaurant_name') }}</div>
+<h1>Order tracking</h1>
+<p class="muted">Every line item ordered from your restaurant, with the customer who ordered it.</p>
+
+{% if orders %}
+<table>
+  <thead>
+    <tr>
+      <th>Order #</th><th>Date</th>
+      <th>Customer ID</th><th>Customer Name</th><th>Phone</th><th>Address</th>
+      <th>Item</th><th>Qty</th><th>Unit Price</th><th>Line Total</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for o in orders %}
+    <tr>
+      <td>#{{ o.OrderID }}</td>
+      <td>{{ o.OrderDate }}</td>
+      <td>{{ o.CustomerID }}</td>
+      <td>{{ o.CustomerName }}</td>
+      <td>{{ o.Phone }}</td>
+      <td>{{ o.Address }}</td>
+      <td>{{ o.ItemName }}</td>
+      <td>{{ o.Quantity }}</td>
+      <td>${{ "%.2f"|format(o.Price) }}</td>
+      <td>${{ "%.2f"|format(o.LineTotal) }}</td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<div class="empty-state">No orders have come in yet.</div>
+{% endif %}
+
+{% endblock %}

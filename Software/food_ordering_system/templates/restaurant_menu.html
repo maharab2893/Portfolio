@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}{{ restaurant.Name }} — FreshTicket{% endblock %}
+{% block content %}
+
+<div class="eyebrow">{{ restaurant.Location }}</div>
+<h1>{{ restaurant.Name }}</h1>
+
+{% if items %}
+<div class="grid cols-3" style="margin-top:20px;">
+  {% for item in items %}
+  <div class="ticket">
+    <h3>{{ item.Name }}</h3>
+    <div class="meta">Avg. making time: {{ item.AverageMakingTime }} min</div>
+    <div class="stub-divider"></div>
+    <div class="price">${{ "%.2f"|format(item.Price) }}</div>
+    <form method="POST" action="{{ url_for('cart_add', item_id=item.ItemID) }}" style="margin-top:10px;">
+      <input class="qty-input" type="number" name="quantity" value="1" min="1">
+      <button class="btn btn-small btn-accent" type="submit">Add to cart</button>
+    </form>
+  </div>
+  {% endfor %}
+</div>
+{% else %}
+<div class="empty-state">This restaurant hasn't added any menu items yet.</div>
+{% endif %}
+
+{% endblock %}

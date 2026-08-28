@@ -1,0 +1,33 @@
+erDiagram
+    CUSTOMER ||--o{ ORDERS : places
+    RESTAURANT ||--o{ MENUITEM : offers
+    ORDERS ||--|{ ORDERDETAIL : contains
+    MENUITEM ||--o{ ORDERDETAIL : "line item of"
+
+    CUSTOMER {
+        int CustomerID PK
+        string Name
+        string Email
+    }
+    RESTAURANT {
+        int RestaurantID PK
+        string Name
+        string Location
+    }
+    MENUITEM {
+        int ItemID PK
+        int RestaurantID FK
+        string Name
+        float Price
+    }
+    ORDERS {
+        int OrderID PK
+        int CustomerID FK
+        datetime OrderDate
+        float TotalAmount
+    }
+    ORDERDETAIL {
+        int OrderID PK_FK
+        int ItemID PK_FK
+        int Quantity
+    }
