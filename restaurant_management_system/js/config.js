@@ -9,6 +9,6 @@
    NEVER put the service_role key in this file.
 --------------------------------------------------------------------- */
 window.APP_CONFIG = {
-  SUPABASE_URL: 'https://ypifohitqzmrxmdfbyga.supabase.co/',
-  SUPABASE_ANON_KEY: 'sb_publishable_YZrc7VYeBv8YpGpFN7yJNA_byXDgH8t',
+  SUPABASE_URL: 'https://YOUR_URL.supabase.co/',
+  SUPABASE_ANON_KEY: 'YOUR_API_KEY',
 };
